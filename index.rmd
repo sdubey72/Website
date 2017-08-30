@@ -1,0 +1,19 @@
+---
+title: "Hello"
+output: html_document
+---
+
+#This is the First level Header
+##Second Level Header
+###Third Level Header
+Hello world
+
+* Item 1
+* Item 2
+
+Column 1 | Column 2
+---|---
+one   | 1
+two   | 2
+
+<img src="20161118_203542.JPG"  width ="400" />
