@@ -1,7 +1,13 @@
 ---
-title: "Hello"
+title: "dplyr"
 output: html_document
 ---
+
+Sharddha Dubey
+- Data Science Student at Mercyhurst University
+
+<img src="Shraddha.JPG"  width ="100" />
+
 ##Filtering Columns and Rows from the Lahman DB
 when using dplyr, we can filter the columns and rows by suning selecte and a filter. lets look at an example using Lahman db. 
 
@@ -15,38 +21,9 @@ lets see the homerun for 1972 NYY.
 ```{r}
 Batting%>% 
   select (playerID, yearID,teamID,HR)%>%
-  filter(teamID=='NYA' & yearID='1972')
+  filter(teamID=='NYA' & yearID=='1972')
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#This is the First level Header
-##Second Level Header
-###Third Level Header
-Hello world
-
-* Item 1
-* Item 2
-* Item 3
-* Item 4
-
-Column 1 | Column 2
----|---
-one   | 1
-two   | 2
 
 <img src="download.png"  width ="400" />
 
