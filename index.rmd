@@ -2,14 +2,15 @@
 title: "dplyr"
 output: html_document
 ---
+<img src="Shraddha.JPG"  width ="100" />
 
 Sharddha Dubey
 - Data Science Student at Mercyhurst University
 
-<img src="Shraddha.JPG"  width ="100" />
 
-##Filtering Columns and Rows from the Lahman DB
-when using dplyr, we can filter the columns and rows by suning selecte and a filter. lets look at an example using Lahman db. 
+
+##Working with dplyr using Lahman Database
+####when using dplyr, we can filter the columns and rows by suning selecte and a filter. lets look at an example using Lahman db. 
 
 ```{r message=FALSE,warning=FALSE}
 library(Lahman)
@@ -17,13 +18,90 @@ library(dplyr)
 
 ```
 
+### Usage of "filters" :  Its equvalent to From clause in SQL statments
 lets see the homerun for 1972 NYY. 
-```{r}
+```{r, echo=TRUE}
 Batting%>% 
   select (playerID, yearID,teamID,HR)%>%
   filter(teamID=='NYA' & yearID=='1972')
 ```
 
+####All the players in Yankee's with Homerun greater than or equAL to 40
+```{r}
+Batting%>% 
+  select (playerID, yearID,teamID,HR)%>%
+  filter(HR>=40 & teamID=='NYA')
+```
 
-<img src="download.png"  width ="400" />
+
+####All the players whoes Homerun is more than 40 and Strike out rate is more than 60
+```{r}
+Batting%>%
+  select(playerID,teamID,yearID,HR,SO)%>%
+  filter(HR>40 & SO<60)
+```
+
+
+####All the players of Team PHI having Homerun more than 30 in 1970's
+```{r}
+Batting%>%
+  select(playerID,teamID,yearID,HR)%>%
+  filter(HR>30 & teamID=='PHI' & yearID>=1970 & yearID<=1979)
+```
+
+### Usage of "arrange" and Summarize : 
+### Arrange is equvalent of Group-by clause in SQL, by default it displays data in ascending order
+### Summarize is order by clause of SQL statments
+
+####All the instances of players  hitting more than 50 homeruns and having the players with most homeruns at the top.
+```{r}
+Batting%>%
+  select(playerID,yearID,teamID,HR)%>%
+  filter(HR>50)%>%
+  arrange(desc(HR))
+```
+
+####All the instances of players striking outs letss than 10 times having at least 400 at-bats. Players with the smallest number of strikeouts at the top
+```{r}
+Batting%>%
+  select(playerID,yearID,teamID,HR,SO,AB)%>%
+  filter(SO<10 & AB>400)%>%
+  arrange(SO)
+```
+
+####Find the career HR total for all the playersbut limit the list to those who have career total of 600 or more. Put the highest total at the top
+
+```{r}
+Batting%>%
+  group_by(playerID)%>%
+  summarize(Career_HR=sum(HR))%>%
+  filter(Career_HR>600)%>%
+  arrange(desc(Career_HR))
+```
+
+####Find the career HR total for all the playersbut limit the list to those who have career total of 600 or more. Put the highest total at the top
+```{r}
+Batting%>%
+  group_by(playerID)%>%
+  summarize(Career_HR=sum(HR))%>%
+  filter(Career_HR>600)%>%
+  arrange(desc(Career_HR))
+```
+
+####What players have the highest average per season HR total
+```{r}
+Batting%>%
+  group_by(playerID,yearID)%>%
+  summarize(AvgHR=mean(HR))%>%
+  arrange(desc(AvgHR,yearID))%>%
+  filter(AvgHR>30)
+```
+
+####what players since 1970 have hit more tha 50 homeruns at least once
+```{r}
+Batting%>%
+  filter(HR>50 & yearID>=1970)%>%
+  distinct(playerID)%>%
+  arrange((playerID))
+```
 
